@@ -36,7 +36,7 @@ impl EventHandler for Handler {
                         let pairs: Vec<_> = new_uri.query_pairs().filter_map(|(key, value)| if key == "si" { None } else { Some((key, value)) }).collect();
                         let query = Serializer::new(String::new()).extend_pairs(pairs).finish();
                         new_uri.set_query(Some(query.as_str()));
-                        chars.splice(first_index..last_index, new_uri.to_string().chars());
+                        chars.splice(first_index..=last_index, new_uri.to_string().chars());
                         if let Err(e) = new_message.channel_id.say(&ctx.http, chars.iter().collect::<String>()).await {
                             eprintln!("{e:?}")
                         } else {
